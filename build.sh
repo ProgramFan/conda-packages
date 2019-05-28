@@ -10,4 +10,6 @@ for n in conda.recipe/*; do
   conda build $n --output-folder ${HOME}/assets
 done
 
+ls ${HOME}/assets
+
 exit 0

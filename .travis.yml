@@ -1,3 +1,4 @@
+dist: xenial
 language: python
 python:
   # We don't actually use the Travis Python, but this keeps it organized.
@@ -18,9 +19,11 @@ install:
   - conda config --set always_yes yes --set changeps1 no
   - conda config --add channels conda-forge
   - conda config --add channels programfan
+  - conda config --set conda-build.skip_existing true
+  - conda config --set conda-build.no_verify true
   - conda update -q conda
   - conda info -a
-  - conda install -q conda-build conda-verify anaconda-client
+  - conda install -q conda-build anaconda-client
 
 script:
   - ./build.sh
