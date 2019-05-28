@@ -15,15 +15,15 @@ install:
   - bash miniconda.sh -b -p $HOME/miniconda
   - export PATH="$HOME/miniconda/bin:$PATH"
   - hash -r
+  - conda update -q conda
+  - conda info -a
+  - conda install -q conda-build anaconda-client
   - conda config --set always_yes yes --set changeps1 no
   - conda config --add channels conda-forge
   - conda config --add channels programfan
   - conda config --set conda_build.skip_existing true
   - conda config --set conda_build.no_verify true
   - sed -i 's|conda_build:|conda-build:|g' ~/.condarc
-  - conda update -q conda
-  - conda info -a
-  - conda install -q conda-build anaconda-client
 
 script:
   - ./build.sh
