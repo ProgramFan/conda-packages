@@ -10,6 +10,8 @@ for n in conda.recipe/*; do
   conda build $n --output-folder ${HOME}/assets
 done
 
-ls ${HOME}/assets
+for n in $(find ${HOME}/assets *.tar.bz2); do
+  anaconda -t $CONDA_UPLOAD_TOKEN upload -u programfan $n --force
+done
 
 exit 0
