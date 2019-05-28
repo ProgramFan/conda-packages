@@ -1,0 +1,143 @@
+diff --git a/constructor/install.py b/constructor/install.py
+index fa10c96..fbc2190 100644
+--- a/constructor/install.py
++++ b/constructor/install.py
+@@ -27,6 +27,7 @@ import sys
+ import json
+ import shutil
+ import stat
++import string
+ from os.path import abspath, dirname, exists, isdir, isfile, islink, join
+ from optparse import OptionParser
+ 
+@@ -315,6 +316,12 @@ def link(prefix, dist, linktype=LINK_HARD, info_dir=None):
+     been extra_info in either
+       - <PKGS_DIR>/dist
+       - <ROOT_PREFIX>/ (when the linktype is None)
++
++    Preliminary support of noarch:python is introduced. files in
++    <prefix>/site-packages will be moved into
++    <prefix>/lib/pythonX.Y/site-packages and entry_points will be created in
++    <prefix>/bin. This makes most noarch:python packages work but the pyc files
++    are not compiled.
+     '''
+     if linktype:
+         source_dir = join(PKGS_DIR, dist)
+@@ -326,11 +333,23 @@ def link(prefix, dist, linktype=LINK_HARD, info_dir=None):
+     files = list(yield_lines(join(info_dir, 'files')))
+     # TODO: Use paths.json, if available or fall back to this method
+     has_prefix_files = read_has_prefix(join(info_dir, 'has_prefix'))
++    python_xy = "python%d.%d" % sys.version_info[:2]
+ 
+     if linktype:
+-        for f in files:
++        for i, f in enumerate(files):
+             src = join(source_dir, f)
+-            dst = join(prefix, f)
++            # link site-packages into python-specific path for noarch:python
++            # packages and fix file paths.
++            noarch_python = False
++            if f.startswith("site-packages" + os.path.sep):
++                dst = join(prefix, "lib", python_xy, f)
++                noarch_python = True
++            elif f.startswith("python-scripts" + os.path.sep):
++                dst = join(prefix, "bin", os.path.basename(f))
++                noarch_python = True
++            else:
++                dst = join(prefix, f)
++            files[i] = os.path.relpath(dst, prefix)
+             dst_dir = dirname(dst)
+             if not isdir(dst_dir):
+                 os.makedirs(dst_dir)
+@@ -340,12 +359,49 @@ def link(prefix, dist, linktype=LINK_HARD, info_dir=None):
+                 else:
+                     raise Exception("dst exists: %r" % dst)
+             lt = linktype
+-            if f in has_prefix_files or f in no_link or islink(src):
++            if noarch_python:
++                lt = LINK_COPY
++            elif f in has_prefix_files or f in no_link or islink(src):
+                 lt = LINK_COPY
+             try:
+                 _link(src, dst, lt)
+             except OSError:
+                 pass
++            if noarch_python:
++                try:
++                    update_prefix(dst, prefix, prefix_placeholder, "text")
++                except PaddingError:
++                    sys.exit("ERROR: placeholder '%s' too short in: %s\n" %
++                             (prefix_placeholder, dist))
++    else:
++        # move site-packages into python-specific path for noarch:python
++        # packages and fix file paths.
++        for i, f in enumerate(files):
++            src = join(prefix, f)
++            if not os.path.exists(src):
++                continue
++            if f.startswith("site-packages" + os.path.sep):
++                dst = join(prefix, "lib", python_xy, f)
++            elif f.startswith("python-scripts" + os.path.sep):
++                dst = join(prefix, "bin", os.path.basename(f))
++            else:
++                continue
++            files[i] = os.path.relpath(dst, prefix)
++            try:
++                dst_dir = dirname(dst)
++                if not os.path.exists(dst_dir):
++                    os.makedirs(dst_dir)
++                shutil.copy2(src, dst)
++                os.remove(src)
++            except OSError:
++                pass
++            try:
++                update_prefix(dst, prefix, prefix_placeholder, "text")
++            except PaddingError:
++                sys.exit("ERROR: placeholder '%s' too short in: %s\n" %
++                         (prefix_placeholder, dist))
++        rm_rf(join(prefix, "site-packages"))
++        rm_rf(join(prefix, "python-scripts"))
+ 
+     for f in sorted(has_prefix_files):
+         placeholder, mode = has_prefix_files[f]
+@@ -355,6 +411,40 @@ def link(prefix, dist, linktype=LINK_HARD, info_dir=None):
+             sys.exit("ERROR: placeholder '%s' too short in: %s\n" %
+                      (placeholder, dist))
+ 
++    # Create entry points for a noarch:python package
++    link_fn = join(info_dir, "link.json")
++    while exists(link_fn):
++        with open(link_fn) as f:
++            link_json = json.load(f)
++        if "noarch" not in link_json:
++            break
++        if link_json["noarch"]["type"] != "python":
++            break
++        if "entry_points" not in link_json["noarch"]:
++            break
++        tpl = string.Template('''#!${python}
++#-*- coding: utf-8 -*-
++
++import sys
++import ${module}
++
++if __name__ == "__main__":
++    sys.exit(${obj}())
++''')
++        python_interp = join(prefix, "bin", "python")
++        for s in link_json["noarch"]["entry_points"]:
++            name, entry = map(lambda x: x.strip(), s.split("="))
++            entry_segs = entry.split(":")
++            module = entry_segs[0]
++            obj = ".".join(entry_segs)
++            content = tpl.substitute(python=python_interp, module=module,
++                                     obj=obj)
++            out_f = join(prefix, "bin", name)
++            with open(out_f, "w") as f:
++                f.write(content)
++            os.chmod(out_f, 509) # 509 is the octal rep of 0755/0o755
++        break
++
+     if not run_script(prefix, dist, 'post-link'):
+         sys.exit("Error: post-link failed for: %s" % dist)
+ 
