@@ -1,8 +1,9 @@
+dist: xenial
 language: python
 python:
   # We don't actually use the Travis Python, but this keeps it organized.
   - "2.7"
-  - "3.6"
+  - "3.7"
 install:
   - sudo apt-get update
   # We do this conditionally because it saves us some downloading if the
@@ -18,9 +19,9 @@ install:
   - conda config --set always_yes yes --set changeps1 no
   - conda config --add channels conda-forge
   - conda config --add channels programfan
-  - echo "conda-build:" >> "$HOME/.condarc"
-  - echo "  skip_existing: true" >> "$HOME/.condarc"
-  - echo "  no_verify: true" >> "$HOME/.condarc"
+  - conda config --set conda_build.skip_existing true
+  - conda config --set conda_build.no_verify true
+  - sed -i 's|conda_build:|conda-build:|g' ~/.condarc
   - conda update -q conda
   - conda info -a
   - conda install -q conda-build anaconda-client
