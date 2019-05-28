@@ -22,4 +22,4 @@ install:
   - conda install -q conda-build conda-verify anaconda-client
 
 script:
-  - build.sh
+  - ./build.sh
