@@ -1,5 +1,5 @@
-{% set name = "fprettify" %}
-{% set version = "0.3.3" %}
+{% set name = "compdb" %}
+{% set version = "0.2.0" %}
 
 package:
   name: "{{ name|lower }}"
@@ -7,13 +7,13 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 0b68d8e85ddb49be8e1580f6de4ada4dc65b71e11fea611eecd77f3154868154
+  sha256: 73471badd01e5e69c816fb3a4e0d014f099c2826ee283df5716cd7b1902b79dd
 
 build:
   number: 0
   noarch: python
   entry_points:
-    - fprettify = fprettify:run
+    - compdb=compdb.cli:main
   script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv "
 
 requirements:
@@ -25,15 +25,17 @@ requirements:
 
 test:
   imports:
-    - fprettify
+    - compdb
+    - compdb.backend
+    - compdb.complementer
   commands:
-    - fprettify --help
+    - compdb --help
 
 about:
-  home: https://github.com/pseewald/fprettify
-  license: GNU General Public v3 (GPLv3)
-  license_family: GPL3
-  summary: auto-formatter for modern fortran source code
+  home: https://github.com/Sarcasm/compdb
+  license: MIT
+  license_family: MIT
+  summary: The compilation database Swiss army knife
 
 extra:
   recipe-maintainers:

@@ -1,5 +1,5 @@
-{% set name = "fprettify" %}
-{% set version = "0.3.3" %}
+{% set name = "fortran-language-server" %}
+{% set version = "1.9.0" %}
 
 package:
   name: "{{ name|lower }}"
@@ -7,33 +7,35 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 0b68d8e85ddb49be8e1580f6de4ada4dc65b71e11fea611eecd77f3154868154
+  sha256: 4b2d4bd1703c4f76a199841007d261c1af600cda606a9798c39a0c1413bbb6ac
 
 build:
   number: 0
-  noarch: python
+  noarch: : python
   entry_points:
-    - fprettify = fprettify:run
+    - fortls = fortls.__init__:main
   script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv "
 
 requirements:
   host:
+    - future
     - pip
     - python
   run:
+    - future
     - python
 
 test:
   imports:
-    - fprettify
+    - fortls
   commands:
-    - fprettify --help
+    - fortls --help
 
 about:
-  home: https://github.com/pseewald/fprettify
-  license: GNU General Public v3 (GPLv3)
-  license_family: GPL3
-  summary: auto-formatter for modern fortran source code
+  home: https://github.com/hansec/fortran-language-server
+  license: UNKNOWN
+  license_family: OTHER
+  summary: FORTRAN Language Server for the Language Server Protocol
 
 extra:
   recipe-maintainers:
