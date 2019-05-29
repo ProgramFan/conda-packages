@@ -43,7 +43,6 @@ install:
   - conda config --add channels programfan
   - conda config --set conda_build.skip_existing true
   - conda config --set conda_build.no_verify true
-  - sed -i 's|conda_build:|conda-build:|g' ~/.condarc
 
 script:
   - ./build.sh
