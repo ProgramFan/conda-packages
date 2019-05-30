@@ -1,0 +1,24 @@
+{% set version = "0.1.0" %}
+
+package:
+  name: jupyterlab-extension-pack
+  version: {{ version }}
+
+build:
+  number: 0
+  noarch: python
+
+requirements:
+  build:
+    - nodejs
+    - jupyterlab >=0.35
+  run:
+    - jupyterlab >=0.35
+    - ipywidgets >=7.2
+    - jupyterlab-dash
+
+about:
+  home: https://github.com/programfan/conda-packages
+  license: MIT
+  license_file: LICENSE
+  summary: A set of jupyterlab extensions
