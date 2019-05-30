@@ -18,5 +18,4 @@ requirements:
 about:
   home: https://github.com/programfan/conda-packages
   license: MIT
-  license_file: LICENSE
   summary: A set of jupyterlab extensions
