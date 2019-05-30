@@ -1,5 +1,5 @@
 diff --git a/constructor/install.py b/constructor/install.py
-index fa10c96..fbc2190 100644
+index fa10c96..736435a 100644
 --- a/constructor/install.py
 +++ b/constructor/install.py
 @@ -27,6 +27,7 @@ import sys
@@ -23,7 +23,7 @@ index fa10c96..fbc2190 100644
      '''
      if linktype:
          source_dir = join(PKGS_DIR, dist)
-@@ -326,11 +333,23 @@ def link(prefix, dist, linktype=LINK_HARD, info_dir=None):
+@@ -326,11 +333,26 @@ def link(prefix, dist, linktype=LINK_HARD, info_dir=None):
      files = list(yield_lines(join(info_dir, 'files')))
      # TODO: Use paths.json, if available or fall back to this method
      has_prefix_files = read_has_prefix(join(info_dir, 'has_prefix'))
@@ -38,7 +38,10 @@ index fa10c96..fbc2190 100644
 +            # packages and fix file paths.
 +            noarch_python = False
 +            if f.startswith("site-packages" + os.path.sep):
-+                dst = join(prefix, "lib", python_xy, f)
++                if on_win:
++                    dst = join(prefix, "Lib", f)
++                else:
++                    dst = join(prefix, "lib", python_xy, f)
 +                noarch_python = True
 +            elif f.startswith("python-scripts" + os.path.sep):
 +                dst = join(prefix, "bin", os.path.basename(f))
@@ -49,7 +52,7 @@ index fa10c96..fbc2190 100644
              dst_dir = dirname(dst)
              if not isdir(dst_dir):
                  os.makedirs(dst_dir)
-@@ -340,12 +359,49 @@ def link(prefix, dist, linktype=LINK_HARD, info_dir=None):
+@@ -340,12 +362,52 @@ def link(prefix, dist, linktype=LINK_HARD, info_dir=None):
                  else:
                      raise Exception("dst exists: %r" % dst)
              lt = linktype
@@ -76,7 +79,10 @@ index fa10c96..fbc2190 100644
 +            if not os.path.exists(src):
 +                continue
 +            if f.startswith("site-packages" + os.path.sep):
-+                dst = join(prefix, "lib", python_xy, f)
++                if on_win:
++                    dst = join(prefix, "Lib", f)
++                else:
++                    dst = join(prefix, "lib", python_xy, f)
 +            elif f.startswith("python-scripts" + os.path.sep):
 +                dst = join(prefix, "bin", os.path.basename(f))
 +            else:
@@ -100,7 +106,7 @@ index fa10c96..fbc2190 100644
  
      for f in sorted(has_prefix_files):
          placeholder, mode = has_prefix_files[f]
-@@ -355,6 +411,40 @@ def link(prefix, dist, linktype=LINK_HARD, info_dir=None):
+@@ -355,6 +417,44 @@ def link(prefix, dist, linktype=LINK_HARD, info_dir=None):
              sys.exit("ERROR: placeholder '%s' too short in: %s\n" %
                       (placeholder, dist))
  
@@ -132,10 +138,14 @@ index fa10c96..fbc2190 100644
 +            obj = ".".join(entry_segs)
 +            content = tpl.substitute(python=python_interp, module=module,
 +                                     obj=obj)
-+            out_f = join(prefix, "bin", name)
++            if on_win:
++                out_f = join(prefix, "Scripts", name + ".py")
++            else:
++                out_f = join(prefix, "bin", name)
 +            with open(out_f, "w") as f:
 +                f.write(content)
 +            os.chmod(out_f, 509) # 509 is the octal rep of 0755/0o755
++            files.append(os.path.relpath(out_f, prefix))
 +        break
 +
      if not run_script(prefix, dist, 'post-link'):

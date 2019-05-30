@@ -13,7 +13,7 @@ source:
     - 0001-support-noarch-python-packages.patch
 
 build:
-  number: 2004
+  number: 2005
   script: python setup.py install --single-version-externally-managed --record=record.txt
   noarch: python
   entry_points:
