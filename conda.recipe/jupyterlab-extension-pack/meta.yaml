@@ -11,9 +11,7 @@ build:
 requirements:
   build:
     - nodejs
-    - jupyterlab >=0.35
-  run:
-    - jupyterlab >=0.35
+    - jupyterlab
 
 about:
   home: https://github.com/programfan/conda-packages
