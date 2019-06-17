@@ -60,10 +60,7 @@ about:
   home: https://github.com/powerline/powerline
   license: MIT
   license_family: MIT
-  # License file not include in source distribution. See: https://github.com/powerline/powerline/pull/1873
-  license_file: '{{ environ["RECIPE_DIR"] }}/LICENSE'
   summary: 'Powerline is a statusline plugin for vim'
-
   description: |
     Powerline is a statusline plugin for vim, and provides statuslines and prompts for
     several other applications, including zsh, bash, fish, tmux, IPython, Awesome, i3 and Qtile.
