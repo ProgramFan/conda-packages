@@ -12,11 +12,11 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 2001
+  number: 2002
 
 requirements:
   build:
-    - {{ compiler('c') }}
+    - {{ compiler('c') }} # [linux]
   host:
     - python
     - setuptools
