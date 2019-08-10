@@ -1,5 +1,5 @@
-{% set version = "2.3.0" %}
-{% set sha256 = "81522d7e9b63b66970314e63c1aad69a383541de2d4052fa3e69f892a5bf5dfc" %}
+{% set version = "3.0.0" %}
+{% set sha256 = "2cf49d5400fbe6e2ad4eba7af3c6742e541aaa09dc096b74347272df0187c40e" %}
 
 package:
   name: constructor
@@ -9,11 +9,9 @@ source:
   fn: constructor-{{ version }}.tar.gz
   url: https://github.com/conda/constructor/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
-  patches:
-    - 0001-support-noarch-python-packages.patch
 
 build:
-  number: 2005
+  number: 2000
   script: python setup.py install --single-version-externally-managed --record=record.txt
   noarch: python
   entry_points:
@@ -26,16 +24,15 @@ requirements:
 
   run:
     - python
-    - conda >=4.5
+    - conda >=4.6
     - ruamel_yaml
     - pillow >=3.1     # [win]
-    - nsis >=3.01      # [win]
 
 test:
   imports:
     - constructor
   commands:
-    - constructor --test
+    - constructor --test .
 
 about:
   home: http://github.com/conda/constructor
