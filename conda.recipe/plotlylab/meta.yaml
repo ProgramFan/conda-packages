@@ -23,7 +23,8 @@ requirements:
     - jupyterlab
   run:
     - jupyterlab
-    # - jupyterlab-dash # disabled since does not support python2
+    - jupyterlab-git
+    - jupyterlab-dash # [ py3k ]
     - numpy
     - pandas
     - plotly
