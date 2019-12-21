@@ -1,0 +1,9 @@
+compdb
+compiledb
+fortran-language-server
+fprettify
+plotlylab
+powerline-status
+kaptan
+libtmux
+tmuxp
