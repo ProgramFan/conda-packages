@@ -1,0 +1,41 @@
+{% set name = "libtmux" %}
+{% set version = "0.8.2" %}
+
+package:
+  name: "{{ name|lower }}"
+  version: "{{ version }}"
+
+source:
+  url: "https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz"
+  sha256: "2acd86617203bc966b125d016526fb40503411a2281b55d9d970a487dc6e065a"
+
+build:
+  noarch: python
+  number: 0
+  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv "
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - libtmux
+  requires:
+    - pytest ==4.5.0
+
+about:
+  home: "https://github.com/tmux-python/libtmux"
+  license: "MIT"
+  license_family: "MIT"
+  license_file: ""
+  summary: "scripting library / orm for tmux"
+  doc_url: ""
+  dev_url: ""
+
+extra:
+  recipe-maintainers:
+    - your-github-id-here

@@ -1,0 +1,54 @@
+{% set name = "tmuxp" %}
+{% set version = "1.5.4" %}
+
+package:
+  name: "{{ name|lower }}"
+  version: "{{ version }}"
+
+source:
+  url: "https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz"
+  sha256: "371105eb69efc457de52fb7a6de0b431a0179c5b54e9ec78180746463153168f"
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - tmuxp=tmuxp:cli.cli
+  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv "
+
+requirements:
+  host:
+    - click >=7<8
+    - colorama >=0.3.9
+    - kaptan >=0.5.10
+    - libtmux >=0.8<0.9
+    - pip
+    - python
+  run:
+    - click >=7<8
+    - colorama >=0.3.9
+    - kaptan >=0.5.10
+    - libtmux >=0.8<0.9
+    - python
+
+test:
+  imports:
+    - tmuxp
+  commands:
+    - tmuxp --help
+  requires:
+    - pytest >=3.9.1
+    - pytest-rerunfailures >=4.2
+
+about:
+  home: "https://github.com/tmux-python/tmuxp"
+  license: "MIT"
+  license_family: "MIT"
+  license_file: ""
+  summary: "tmux session manager"
+  doc_url: ""
+  dev_url: ""
+
+extra:
+  recipe-maintainers:
+    - programfan

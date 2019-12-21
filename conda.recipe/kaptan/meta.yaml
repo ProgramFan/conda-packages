@@ -1,0 +1,43 @@
+{% set name = "kaptan" %}
+{% set version = "0.5.12" %}
+
+package:
+  name: "{{ name|lower }}"
+  version: "{{ version }}"
+
+source:
+  url: "https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz"
+  sha256: "1abd1f56731422fce5af1acc28801677a51e56f5d3c3e8636db761ed143c3dd2"
+
+build:
+  noarch: python
+  number: 0
+  entry_points:
+    - kaptan = kaptan:main
+  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv "
+
+requirements:
+  host:
+    - pip
+    - python
+    - pyyaml >=3.13,<6
+  run:
+    - python
+    - pyyaml >=3.13,<6
+
+test:
+  imports:
+    - kaptan
+    - kaptan.handlers
+  commands:
+    - kaptan --help
+
+about:
+  home: "https://github.com/emre/kaptan"
+  license: "BSD"
+  license_family: "BSD"
+  summary: "Configuration manager"
+
+extra:
+  recipe-maintainers:
+    - programfan
