@@ -9,7 +9,7 @@ source:
   sha256: 570844d99886aa74e0e4e658cf6050798a384de7483ad40765f302f0ecde0ff2
 
 build:
-  number: 2
+  number: 3
   noarch: python
   entry_points:
     - plotly-lab = plotlylab.labapp:main

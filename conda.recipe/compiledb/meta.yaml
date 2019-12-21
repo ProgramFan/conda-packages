@@ -1,5 +1,5 @@
 {% set name = "compiledb" %}
-{% set version = "0.9.8" %}
+{% set version = "0.10.1" %}
 
 package:
   name: "{{ name|lower }}"
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: ded1e9f69c20b62ddc761900bbd48faa9da21b77e4301376515ee1f7ed362a06
+  sha256: 06bb47dd1fa04de3a12720379ff382d40441074476db7c16a27e2ad79b7e966e
 
 build:
   number: 0

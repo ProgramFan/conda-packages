@@ -1,5 +1,5 @@
 {% set name = "fprettify" %}
-{% set version = "0.3.3" %}
+{% set version = "0.3.4" %}
 
 package:
   name: "{{ name|lower }}"
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 0b68d8e85ddb49be8e1580f6de4ada4dc65b71e11fea611eecd77f3154868154
+  sha256: a5a8741f9e732ced9f5a326a880f4005501a732578322bba1a541db64e165533
 
 build:
   number: 0
