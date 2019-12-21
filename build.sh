@@ -8,7 +8,7 @@ rm -rf ${HOME}/assets
 mkdir -p ${HOME}/assets
 for n in $(cat conda.recipe/lists.txt); do
   echo "====================== Building $n =========================="
-  conda build $n --output-folder ${HOME}/assets
+  conda build conda.recipe/$n --output-folder ${HOME}/assets
 done
 
 for n in $(find ${HOME}/assets -name "*.tar.bz2"); do
