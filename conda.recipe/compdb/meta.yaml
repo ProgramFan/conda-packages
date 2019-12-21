@@ -24,10 +24,6 @@ requirements:
     - python
 
 test:
-  imports:
-    - compdb
-    - compdb.backend
-    - compdb.complementer
   commands:
     - compdb --help
 

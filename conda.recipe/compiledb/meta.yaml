@@ -26,9 +26,6 @@ requirements:
     - python
 
 test:
-  imports:
-    - compiledb
-    - compiledb.commands
   commands:
     - compiledb --help
 

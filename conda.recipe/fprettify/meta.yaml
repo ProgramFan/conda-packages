@@ -24,8 +24,6 @@ requirements:
     - python
 
 test:
-  imports:
-    - fprettify
   commands:
     - fprettify --help
 

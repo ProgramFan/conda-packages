@@ -32,13 +32,8 @@ requirements:
     - python
 
 test:
-  imports:
-    - tmuxp
   commands:
     - tmuxp --help
-  requires:
-    - pytest >=3.9.1
-    - pytest-rerunfailures >=4.2
 
 about:
   home: "https://github.com/tmux-python/tmuxp"

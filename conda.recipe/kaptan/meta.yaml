@@ -28,9 +28,6 @@ requirements:
 test:
   imports:
     - kaptan
-    - kaptan.handlers
-  commands:
-    - kaptan --help
 
 about:
   home: "https://github.com/emre/kaptan"
