@@ -9,7 +9,7 @@ source:
   sha256: 570844d99886aa74e0e4e658cf6050798a384de7483ad40765f302f0ecde0ff2
 
 build:
-  number: 3
+  number: 4
   noarch: python
   entry_points:
     - plotly-lab = plotlylab.labapp:main
@@ -23,21 +23,21 @@ requirements:
     - jupyterlab
   run:
     - jupyterlab
-    - jupyterlab-git
-    - jupyterlab-dash # [ py3k ]
-    - numpy
-    - pandas
+    - jupyterlab-git 0.9.0
+    - jupyterlab-dash 0.1.0a3 # [ py3k ]
+    - ipywidgets
     - plotly
-    - plotly_express
     - plotly-orca
     - psutil # required by plotly-orca but not implicitly deped.
-    - colorlover
     - dash
-    - dash-renderer
     - dash-html-components
     - dash-core-components
     - dash-daq
     - dash-table
+    - dash-renderer
+    - numpy
+    - pandas
+    - colorlover
 
 about:
   home: https://github.com/plotly/plotlylab

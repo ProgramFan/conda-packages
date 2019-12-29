@@ -11,11 +11,23 @@ export JUPYTERLAB_DIR=$PREFIX/share/jupyter/plotlylab
 
 ARGS="--no-build --log-level=INFO"
 # Extensions to install
+# table-of-contents extension
 jupyter labextension install @jupyterlab/toc ${ARGS} 
-jupyter labextension install @jupyterlab/git ${ARGS}
-jupyter labextension install @jupyter-widgets/jupyterlab-manager@1.1.0 ${ARGS}
+# git extension, be sure to use the same version as meta.yaml
+jupyter labextension install @jupyterlab/git@0.9.0 ${ARGS}
+# Jupyter widgets extension
+jupyter labextension install @jupyter-widgets/jupyterlab-manager@1.1 ${ARGS}
+# FigureWidget support
+jupyter labextension install plotlywidget@1.4.0 ${ARGS}
+# jupyterlab renderer support
+jupyter labextension install jupyterlab-plotly@1.4.0 ${ARGS}
+# jupyterlab dash renderer support, be sure to use the same version as
+# meta.yaml.
 jupyter labextension install jupyterlab-dash@0.1.0-alpha.3 ${ARGS}
+# jupyterlab plotly chart editor
+jupyter labextension install jupyterlab-chart-editor@1.2 ${ARGS}
 
+# Build extensions all at once
 jupyter lab build --name='PlotlyLab'
 jupyter lab clean
 
