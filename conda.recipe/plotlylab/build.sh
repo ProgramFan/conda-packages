@@ -25,7 +25,7 @@ jupyter labextension install jupyterlab-plotly@1.4.0 ${ARGS}
 # meta.yaml.
 jupyter labextension install jupyterlab-dash@0.1.0-alpha.3 ${ARGS}
 # jupyterlab plotly chart editor
-jupyter labextension install jupyterlab-chart-editor@1.2 ${ARGS}
+jupyter labextension install jupyterlab-chart-editor ${ARGS}
 
 # Build extensions all at once
 jupyter lab build --name='PlotlyLab'
