@@ -21,9 +21,6 @@ jupyter labextension install @jupyter-widgets/jupyterlab-manager@1.1 ${ARGS}
 jupyter labextension install plotlywidget@1.4.0 ${ARGS}
 # jupyterlab renderer support
 jupyter labextension install jupyterlab-plotly@1.4.0 ${ARGS}
-# jupyterlab dash renderer support, be sure to use the same version as
-# meta.yaml.
-jupyter labextension install jupyterlab-dash@0.1.0-alpha.3 ${ARGS}
 # jupyterlab plotly chart editor
 jupyter labextension install jupyterlab-chart-editor ${ARGS}
 

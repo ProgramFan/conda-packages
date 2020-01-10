@@ -7,3 +7,4 @@ powerline-status
 kaptan
 libtmux
 tmuxp
+pynvim

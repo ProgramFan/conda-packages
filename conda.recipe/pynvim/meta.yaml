@@ -1,0 +1,50 @@
+{% set name = "pynvim" %}
+{% set version = "0.4.0" %}
+{% set sha256 = "71fd8bb3285deeda8c259383066214e0d522a96bfb3ca4871333adfcb454e9d6" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  fn: {{ name }}-{{ version }}.tar.gz
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: {{ sha256 }}
+
+build:
+  number: 2
+  script: {{ PYTHON }} -m pip install . --no-deps -vv
+
+requirements:
+  host:
+    - python
+    - pytest-runner
+    - pip
+  run:
+    - python
+    - msgpack-python >=0.5.0
+    - greenlet
+
+test:
+  imports:
+    - pynvim
+    - pynvim.api
+    - pynvim.msgpack_rpc
+    - pynvim.msgpack_rpc.event_loop
+    - pynvim.plugin
+
+about:
+  home: http://github.com/neovim/pynvim
+  license: Apache-2.0
+  license_family: Apache
+  license_file: 'LICENSE'
+  summary: 'Python client to neovim'
+
+  description: |
+    Python client to neovim
+  dev_url: https://github.com/neovim/pynvim
+
+extra:
+  recipe-maintainers:
+    - curtisalexander
+    - xhochy
