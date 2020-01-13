@@ -1,0 +1,16 @@
+diff -ur constructor-3.0.1/constructor/construct.py constructor-3.0.1-new/constructor/construct.py
+--- constructor-3.0.1/constructor/construct.py	2019-09-18 00:36:45.000000000 +0800
++++ constructor-3.0.1-new/constructor/construct.py	2020-01-13 22:48:24.000000000 +0800
+@@ -205,9 +205,10 @@
+     return dict(
+         linux = p.startswith('linux-'),
+         linux32 = bool(p == 'linux-32' or p == 'linux-armv7l'),
+-        linux64 = bool(p == 'linux-64' or p == 'linux-ppc64le'),
++        linux64 = bool(p == 'linux-64' or p == 'linux-ppc64le' or p ==
++                       'linux-aarch64'),
+         armv7l = bool(p == 'linux-armv7l'),
+-        aarch64 = bool(p == 'aarch64'),
++        aarch64 = bool(p == 'linux-aarch64'),
+         ppc64le = bool(p == 'linux-ppc64le'),
+         x86 = p.endswith(('-32', '-64')),
+         x86_64 = p.endswith('-64'),
