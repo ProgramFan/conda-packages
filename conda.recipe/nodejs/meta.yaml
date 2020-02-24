@@ -1,0 +1,65 @@
+{% set version = "13.9.0" %}
+
+package:
+  name: nodejs
+  version: {{ version }}
+
+source:
+  fn: node-v{{ version }}.tar.gz
+  url: https://nodejs.org/dist/v{{ version }}/node-v{{ version }}.tar.gz  # [not win]
+  sha256: 1953121fcf5a8933e0bd282f78e6b8b25fb6d55bb50d47416ae7a7dbbdc288bb  # [not win]
+  url: https://nodejs.org/dist/v{{ version }}/node-v{{ version }}-win-x64.zip  # [win]
+  sha256: ec0a55bb703906494e738cd3d09e3274b34f0a3fbe207b9e67502092ed017500  # [win]
+  patches:
+    - linux-librt.patch  # [not win]
+    - cinttypes.patch  # [linux]
+
+build:
+  number: 1000
+  ignore_prefix_files:
+    - bin/node
+
+requirements:
+  build:
+    - {{ compiler('c') }}  # [not win]
+    - {{ compiler('cxx') }}  # [not win]
+    - python 3.7  # [not win]
+    - git  # [linux]
+    - make  # [linux]
+    - pkg-config  # [not win]
+  host:
+    - vs2015_runtime  # [win]
+    - icu  # [not win]
+    - libuv >=1.33  # [not win]
+    - openssl  >=1.1.1d  # [not win]
+    - zlib  # [not win]
+  run:
+    - vs2015_runtime  # [win]
+    - icu  # [not win]
+    - libuv  # [not win]
+    - openssl  # [not win]
+    - zlib  # [not win]
+  run_constrained:  # [osx]
+    - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.9") }}  # [osx]
+
+test:
+  commands:
+    - node -h
+    - node -v
+    - npm version
+    - npm install -h
+    - npm config get prefix -g
+    - test $(echo "console.log(1 + 3)" | node) == 4  # [not win]
+
+about:
+  home: https://nodejs.org/
+  license: MIT
+  license_file: LICENSE
+  summary: a platform for easily building fast, scalable network applications
+
+extra:
+  recipe-maintainers:
+    - minrk
+    - msarahan
+    - pelson
+    - blink1073
