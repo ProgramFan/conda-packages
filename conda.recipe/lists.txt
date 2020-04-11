@@ -9,4 +9,3 @@ kaptan
 libtmux
 tmuxp
 pynvim
-neovim
