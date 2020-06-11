@@ -1,0 +1,40 @@
+{% set name = "pandas-bokeh" %}
+{% set version = "0.5" %}
+
+package:
+  name: "{{ name|lower }}"
+  version: "{{ version }}"
+
+source:
+  url: "https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz"
+  sha256: b65ef460b1ff6452fa3ec7edecc5555b5146850634b2f6742c05b0372431f6b8
+
+build:
+  number: 0
+  noarch: python
+  script: "{{ PYTHON }} -m pip install . -vv"
+
+requirements:
+  host:
+    - pandas
+    - bokeh
+    - pip
+    - python
+  run:
+    - pandas
+    - bokeh
+    - python
+
+test:
+  imports:
+    - pandas_bokeh
+
+about:
+  home: "https://github.com/PatrikHlobil/Pandas-Bokeh"
+  license: "MIT"
+  license_family: MIT
+  summary: "Bokeh Plotting Backend for Pandas and GeoPandas"
+
+extra:
+  recipe-maintainers:
+    - programfan
