@@ -26,6 +26,7 @@ install:
   - conda install -y -q conda-build anaconda-client
   - conda config --set always_yes yes --set changeps1 no
   - conda config --add channels conda-forge
+  - conda config --add channels plotly
   - conda config --add channels programfan
   - conda config --set conda_build.skip_existing true
   - conda config --set conda_build.no_verify true
