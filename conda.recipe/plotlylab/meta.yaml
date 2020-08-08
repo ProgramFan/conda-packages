@@ -2,7 +2,7 @@
 
 package:
   name: plotlylab
-  version: 2.1.0
+  version: 2.2.4
 
 source:
   url: https://github.com/plotly/plotlylab/archive/v{{version}}.tar.gz
@@ -20,11 +20,11 @@ requirements:
     - python
     - pip
     - nodejs
-    - jupyterlab >=2.1
+    - jupyterlab >=2.2
   run:
-    - jupyterlab >=2.1
+    - jupyterlab >=2.2
     - ipywidgets
-    - plotly >=4.6
+    - plotly >=4.9
 
 about:
   home: https://github.com/plotly/plotlylab
