@@ -1,13 +1,13 @@
 {% set name = "fortran-language-server" %}
-{% set version = "1.10.3" %}
+{% set version = "1.12.0" %}
 
 package:
   name: "{{ name|lower }}"
   version: "{{ version }}"
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: bde8c298d06260d209d504d7cf728d602fc6b881ff362e74817e970ac94be5e8
+  url: https://github.com/hansec/fortran-language-server/archive/refs/tags/v{{version}}.zip
+  sha256: b349743bae98d810cd48e661e978656e452f7bd3a6a7f344bee5892794c097f3
 
 build:
   number: 0
